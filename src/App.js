@@ -1,25 +1,57 @@
-import logo from './logo.svg';
-import './App.css';
+import { useRef, useState } from 'react';
+import ThemeBtn from './components/ThemeBtn';
+import FormQrCustom from './components/FormQrCustom';
+import QrCard from './components/QrCard';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const qrRef = useRef();
+
+	const [url, setUrl] = useState(''),
+			[qrColor, setQrColor] = useState('#ffffff'),
+			[qrBgColor, setQrBgColor] = useState('#2c7dfa'),
+			[customImg, setCustomImg] = useState(''),
+			[noImg, setNoImg] = useState(false);
+			
+	const handleQrReset = () => {
+		setUrl('');
+		setQrColor('#ffffff');
+		setQrBgColor('#2c7dfa');
+		setCustomImg('');
+		setNoImg(false);
+	}
+
+	return (
+		<>
+			<header>
+				<ThemeBtn />
+			</header>
+
+			<main>
+				<FormQrCustom
+					qrRef={qrRef}
+					url={url}
+					qrColor={qrColor}
+					qrBgColor={qrBgColor}
+					noImg={noImg}
+					setUrl={setUrl}
+					setQrColor={setQrColor}
+					setQrBgColor={setQrBgColor}
+					setCustomImg={setCustomImg}
+					setNoImg={setNoImg}
+					handleQrReset={handleQrReset}
+				/>
+
+				<QrCard
+					qrRef={qrRef}
+					url={url}
+					qrColor={qrColor}
+					bgColor={qrBgColor}
+					customImg={customImg}
+					noImg={noImg}
+				/>
+			</main>
+		</>
+	);
 }
 
 export default App;
